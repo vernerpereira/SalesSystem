@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SalesSystem.MVC.ViewModels.ProductViewModel>
+@using SalesSystem.Common.Resources
+@{
+    ViewBag.Title = Fields.Products;
+}
+
+<h2>@Fields.Products</h2>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.ActionLink(Fields.Create, "Create", null, new { @class="btn btn-sm btn-primary pull-right" })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            R$ @item.Price
+        </td>
+        <td>
+            <div class="pull-right">
+				@Html.ActionLink(Fields.Edit, "Edit", new {parameter = item.Id}, new {@class = "btn btn-sm btn-primary"}) |
+				@Html.ActionLink(Fields.Details, "Details", new {parameter = item.Id}, new {@class = "btn btn-sm btn-primary"}) |
+				@Html.ActionLink(Fields.Delete, "Delete", new {parameter = item.Id}, new {@class = "btn btn-sm btn-danger"})
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+@Html.Raw(ViewBag.Pagination)

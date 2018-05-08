@@ -1,0 +1,40 @@
+﻿@model SalesSystem.MVC.ViewModels.ProductViewModel
+@using SalesSystem.Common.Resources
+@{
+    ViewBag.Title = Fields.Product;
+}
+
+<h2>@Fields.Delete</h2>
+
+<h3>@Messages.AreYouSureWantDelete</h3>
+<div>
+    <h4>@Fields.Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@Fields.Delete" class="btn btn-danger" /> |
+            @Html.ActionLink(Fields.BackToList, "Index", null, new {@class="btn btn-default"})
+        </div>
+    }
+</div>

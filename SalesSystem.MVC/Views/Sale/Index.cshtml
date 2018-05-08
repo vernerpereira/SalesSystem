@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SalesSystem.MVC.ViewModels.SaleViewModel>
+@using SalesSystem.Common.Resources
+@{
+    ViewBag.Title = Fields.Sales;
+}
+
+<h2>@Fields.Sales</h2>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PersistDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalSale)
+        </th>
+        <th>
+            @Html.ActionLink(Fields.Create, "Create", null, new { @class="btn btn-sm btn-primary pull-right" })
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersistDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalSale)
+        </td>
+        <td>
+            <div class="pull-right">
+				@Html.ActionLink(Fields.Details, "Details", new {parameter = item.Id}, new {@class = "btn btn-sm btn-primary"}) |
+				@Html.ActionLink(Fields.Delete, "Delete", new {parameter = item.Id}, new {@class = "btn btn-sm btn-danger"})
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+@Html.Raw(ViewBag.Pagination)

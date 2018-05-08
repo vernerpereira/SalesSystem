@@ -1,0 +1,99 @@
+﻿@model SalesSystem.MVC.ViewModels.SaleViewModel
+@using SalesSystem.Common.Resources
+@{
+    ViewBag.Title = Fields.Sale;
+}
+
+<h2>@Fields.Create</h2>
+
+@using (Html.BeginForm("Create","Sale", FormMethod.Post, new{onsubmit="return main.SubmitSale();"}))
+{
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <h4>@Fields.Sale</h4>
+    <hr />
+    <div class="row col-md-offset-2">
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model=>model.OrderNumber)
+            @Html.EditorFor(model => model.OrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model=>model.PersistDate) <br/>
+            @DateTime.Today.ToString("dd/MM/yyyy")
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model=>model.TotalSale) <br/>
+            <label id="totalSale">R$ 0,00</label>
+        </div>
+    </div>
+    <div class="row col-md-offset-2">
+        <div class="form-group col-md-10">
+            @Html.LabelFor(model=>model.CustomerId)
+            @Html.DropDownListFor(model => model.CustomerId, (SelectList) ViewBag.CustomerId, "",new { @class = "form-control max-width-100" })
+            <span class="text-danger field-validation-error" data-valmsg-for="Customer" data-valmsg-replace="true">
+                <span for="Customer" id="customerValidataionMessage" class=""></span>
+            </span>
+        </div>
+    </div>
+    <hr/>
+    <div class="row col-md-offset-2">
+        <div class="form-group col-md-5 ui-widget">
+            <label>@Fields.Product</label>
+            @Html.Hidden("ProductToIncludeId")
+            @Html.TextBox("ProductToInclude", "", new{@class="form-control  productAutocomplete"})
+        </div>
+        <div class="form-group col-md-2">
+            <label>@Fields.Quantity</label>
+            @Html.TextBox("QuantityToInclude", "", new{@class="form-control", type="number"})
+        </div>
+        <div class="form-group col-md-1"></div>
+        <div class="form-group col-md-2">
+            <label>@Fields.UnitValue</label>
+            @Html.TextBox("UnitValueToInclude", "", new{@class="form-control currency", @readonly="readonly"})
+        </div>
+        <div class="form-group col-md-1"></div>
+        <div class="form-group col-md-1">
+            <label class="pull-right">&nbsp;</label>
+            <input type="button" value="@Fields.Include" id="includeProduct" class="btn btn-primary pull-right"/>
+        </div>
+    </div>
+    <div class="row col-md-offset-2">
+        <span class="text-danger field-validation-error" data-valmsg-for="InsertProduct" data-valmsg-replace="true">
+            <span for="InsertProduct" id="insertProductValidataionMessage" class=""></span>
+        </span>
+    </div>
+    <hr/>
+    <div class="row col-md-offset-2">
+        <div class="col-md-10">
+            <span class="text-danger field-validation-error" data-valmsg-for="Products" data-valmsg-replace="true">
+                <span for="Products" id="productsValidataionMessage" class=""></span>
+            </span>
+            <table class="col-md-12 table-hover">
+                <thead>
+                <tr>
+                    <th>@Fields.Product</th>
+                    <th>@Fields.Quantity</th>
+                    <th>@Fields.UnitValue</th>
+                    <th>@Fields.TotalValue</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="productList">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr/>
+		
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="submitSale" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink(Fields.BackToList, "Index", null, new {@class="btn btn-default"})
+</div>
